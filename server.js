@@ -51,6 +51,9 @@ function startGame() {
 const server = net.createServer((socket) => {
   clients.push(socket);
   socket.write("Welcome to the game! Wait for another player to start.\n");
+  socket.write(
+    "Game rules: Each player can choose a number between 1 and 3. The total is then increased by the chosen number. The player who reaches 20 first loses.\n"
+  );
   socket.on("data", (data) => handleData(socket, data));
   startGame();
 });
