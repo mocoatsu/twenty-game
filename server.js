@@ -4,12 +4,19 @@ let total = 0;
 let turn = 0;
 
 function handleData(socket, data) {
+  const number = parseInt(data, 10);
+
   if (socket !== clients[turn % 2]) {
     socket.write("Wait for your turn!\n");
     return;
   }
 
-  total += parseInt(data, 10);
+  if (isNaN(number) || number < 1 || number > 3) {
+    socket.write("Invalid input. Please enter a number between 1 and 3.\n");
+    return;
+  }
+
+  total += number;
   if (total < 20) {
     turn++;
     notifyClients(socket);
